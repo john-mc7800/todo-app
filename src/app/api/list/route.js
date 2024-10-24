@@ -17,9 +17,7 @@ const getTodos = async () => {
     console.log("Database connected:");
     const todosCollection = db.collection("todo-collections");
 
-    const todos = await todosCollection
-      .find({}, { projection: { title: 1, description: 1 } })
-      .toArray();
+    const todos = await todosCollection.find({}, { projection: {} }).toArray();
     console.log("Fetched todos:");
     return todos;
   } catch (error) {

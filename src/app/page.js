@@ -6,7 +6,6 @@ export default async function Home() {
       <div>
         <h1>Welcome to the Todo App</h1>
         <Link href="/TodoList">View Todo List</Link>{" "}
-        {/* Link to the TodoList page */}
       </div>
     </>
   );

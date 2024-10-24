@@ -8,34 +8,35 @@ export default function TodoList() {
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        const response = await fetch("/api/list"); // Fetch from your API route
+        const response = await fetch("/api/list");
         const data = await response.json();
-        setTodos(data); // Update state with fetched todos
+        setTodos(data);
       } catch (error) {
         console.error("Error fetching todos:", error);
       } finally {
-        setLoading(false); // Update loading state
+        setLoading(false);
       }
     };
 
-    fetchTodos(); // Call the fetch function
+    fetchTodos();
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>; // Show loading state
+    return <div>Loading...</div>;
   }
 
   return (
     <div>
       <h1>Todo List</h1>
       {todos.length === 0 ? (
-        <p>No todos available.</p> // Show message if no todos
+        <p>No todos available.</p>
       ) : (
         <ul>
           {todos.map((todo) => (
             <li key={todo._id}>
               <h2>{todo.title}</h2>
               <p>{todo.description}</p>
+              <p>{todo.price}</p>
             </li>
           ))}
         </ul>
