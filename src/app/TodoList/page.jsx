@@ -1,10 +1,20 @@
+"use client";
 import TodoList from "@/components/TodoList";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function page() {
+  const [todos, setTodos] = useState([]);
+  const fetchTodos = async () => {
+    const res = await fetch("/api/list");
+    const data = await res.json();
+    setTodos(data);
+  };
+  useEffect(() => {
+    fetchTodos();
+  }, []);
   return (
-    <div>
-      <TodoList />
+    <div className="w-[40vw] h-auto p-4 ">
+      <TodoList todos={todos} onTodoDeleted={fetchTodos} />
     </div>
   );
 }
