@@ -2,7 +2,7 @@
 import TodoList from "@/components/TodoList";
 import React, { useEffect, useState } from "react";
 
-export default function TodoList() {
+export default function page() {
   const [todos, setTodos] = useState([]);
   const fetchTodos = async () => {
     const res = await fetch("/api/list");
