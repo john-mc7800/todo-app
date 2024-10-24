@@ -1,10 +1,13 @@
-export default async function Home() {
-  const res = await fetch("http://localhost:3000/api/list");
-  // console.log(res.json());
+import Link from "next/link";
 
+export default async function Home() {
   return (
     <>
-      <h1>usama</h1>
+      <div>
+        <h1>Welcome to the Todo App</h1>
+        <Link href="/TodoList">View Todo List</Link>{" "}
+        {/* Link to the TodoList page */}
+      </div>
     </>
   );
 }
