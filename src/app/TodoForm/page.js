@@ -2,7 +2,7 @@
 import TodoForm from "@/components/TodoForm";
 import React, { useState } from "react";
 
-export default function page() {
+export default function TodoForm() {
   const [refresh, setRefresh] = useState(false);
   const handleTodoAdded = () => {
     setRefresh(!refresh);
