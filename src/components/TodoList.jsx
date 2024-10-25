@@ -50,7 +50,7 @@ export default function TodoList({ todos, onTodoDeleted, onTodoUpdated }) {
 
   return (
     <div>
-      <h1 className="text-2xl">Todo List</h1>
+      {/* <h1 className="text-2xl">Todo List</h1> */}
       {todos.length === 0 ? (
         <p>No todos available.</p>
       ) : (
@@ -58,21 +58,25 @@ export default function TodoList({ todos, onTodoDeleted, onTodoUpdated }) {
           {todos.map((todo) => (
             <li
               key={todo._id}
-              className="flex flex-row justify-between items-center m-2 bg-blue-400 border border-blue-800 p-2"
+              className="flex flex-row justify-between items-center my-2 border border-gray-400 p-2"
             >
               {editTodoId === todo._id ? (
                 <div>
-                  <input
-                    type="text"
-                    placeholder="Title"
-                    defaultValue={todo.title}
-                    onChange={(e) =>
-                      setUpdatedFields({
-                        ...updatedFields,
-                        title: e.target.value,
-                      })
-                    }
-                  />
+                  <div className="">
+                    <label className="text-2xl pr-2 font-medium">Title :</label>
+                    <input
+                      type="text"
+                      placeholder="Title"
+                      defaultValue={todo.title}
+                      onChange={(e) =>
+                        setUpdatedFields({
+                          ...updatedFields,
+                          title: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+
                   <input
                     type="text"
                     placeholder="Description"
@@ -98,27 +102,29 @@ export default function TodoList({ todos, onTodoDeleted, onTodoUpdated }) {
                   <button onClick={() => handleUpdate(todo._id)}>Save</button>
                 </div>
               ) : (
-                <div>
-                  <div className="flex flex-row items-center">
-                    <label>Title :</label>
-                    <h2>{todo.title}</h2>
+                <div className="max-w-[60%]">
+                  <div className="flex flex-row items-center  ">
+                    <label className="text-2xl pr-2 font-medium">Title :</label>
+                    <p className="text-xl ">{todo.title}</p>
                   </div>
                   <div className="flex flex-row items-center">
-                    <label>Description :</label>
-                    <p>{todo.description}</p>
+                    <label className="text-2xl pr-2 font-medium">
+                      Description :
+                    </label>
+                    <p className="text-xl ">{todo.description}</p>
                   </div>
                   <div className="flex flex-row items-center">
-                    <label>Price :</label>
-                    <p>{todo.price}</p>
+                    <label className="text-2xl pr-2 font-medium">Price :</label>
+                    <p className="text-xl ">{todo.price}</p>
                   </div>
                 </div>
               )}
-              <div className="flex space-x-2">
+              <div className="flex space-x-4 mr-2">
                 <button onClick={() => setEditTodoId(todo._id)}>
-                  <IoIosCreate size={20} />
+                  <IoIosCreate size={30} />
                 </button>
                 <button onClick={() => handleDelete(todo._id)}>
-                  <IoIosTrash size={20} />
+                  <IoIosTrash size={30} />
                 </button>
               </div>
             </li>

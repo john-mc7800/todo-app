@@ -1,9 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import TodoList from "./TodoList";
+import TodoListComponent from "./TodoListComponent";
 
 export default function TodoForm({ onTodoAdded }) {
   const [todos, setTodos] = useState([]);
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const fetchTodos = async () => {
     const res = await fetch("/api/list");
     const data = await res.json();
@@ -41,48 +42,58 @@ export default function TodoForm({ onTodoAdded }) {
       setPrice("");
       setMessage("Todo added successfully!");
       onTodoAdded(); // Refresh the todo list after insertion
+      setTimeout(() => {
+        setIsRedirecting(true);
+      }, 2000);
     } else {
       console.error("Failed to insert todo:", responseBody);
     }
-    console.log(handleSubmit);
   };
+  if (isRedirecting) {
+    return <TodoListComponent />;
+  }
+
   return (
-    <div className="bg-orange-400 border border-orange-800 p-4">
-      <h1 className="text-2xl ">Todo Form</h1>
-      <form onSubmit={handleSubmit}>
+    <div className=" border border-gray-400 p-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div className="m-2 flex flex-row items-center justify-between  ">
-          <label>Title : </label>
+          <label className="text-xl">Title : </label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
+            className="w-[80%] border border-gray-800 focus:border-2 focus:rounded-md py-1"
           />
         </div>
         <div className="m-2 flex flex-row items-center justify-between">
-          <label>description : </label>
+          <label className="text-xl">Description : </label>
           <input
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
+            className="w-[80%] border border-gray-800 focus:border-2 focus:rounded-md py-1"
           />
         </div>
         <div className="m-2 flex flex-row items-center justify-between">
-          <label>price : </label>
+          <label className="text-xl">Price : </label>
           <input
             type="text"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required
+            className="w-[80%] border border-gray-800 focus:border-2 focus:rounded-md py-1"
           />
         </div>
-        <button className="bg-green-400 p-2 w-full" type="submit">
+        <button
+          className="bg-[#0a192f] text-white text-xl p-2 w-full"
+          type="submit"
+        >
           Add Todo
         </button>
       </form>
       {message && <h1 className="text-2xl ">{message}</h1>}
-      {message && <TodoList todos={todos} onTodoDeleted={fetchTodos} />}
     </div>
   );
 }
