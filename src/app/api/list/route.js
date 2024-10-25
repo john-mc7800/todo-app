@@ -23,6 +23,16 @@ const deleteTodo = async (id) => {
   return result;
 };
 
+// New update function to modify a todo by ID
+const updateTodo = async (id, updatedFields) => {
+  const todosCollection = db.collection("todo-collections");
+  const result = await todosCollection.updateOne(
+    { _id: new ObjectId(id) },
+    { $set: updatedFields }
+  );
+  return result;
+};
+
 export async function GET(req) {
   const todos = await getTodos();
   return new Response(JSON.stringify(todos), { status: 200 });
@@ -58,6 +68,28 @@ export async function DELETE(req) {
   } catch (error) {
     console.log("Error deleting Todo", error);
     return new Response(JSON.stringify({ message: "Failed to delete Todo" }), {
+      status: 500,
+    });
+  }
+}
+
+// PUT method to update a todo by ID
+export async function PUT(req) {
+  try {
+    const { id, updatedFields } = await req.json();
+    const result = await updateTodo(id, updatedFields);
+    if (result.modifiedCount === 1) {
+      return new Response(JSON.stringify({ message: "Updated successfully" }), {
+        status: 200,
+      });
+    } else {
+      return new Response(JSON.stringify({ message: "Todo not found" }), {
+        status: 404,
+      });
+    }
+  } catch (error) {
+    console.log("Error updating Todo", error);
+    return new Response(JSON.stringify({ message: "Failed to update Todo" }), {
       status: 500,
     });
   }
