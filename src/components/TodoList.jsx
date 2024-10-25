@@ -39,7 +39,7 @@ export default function TodoList({ todos, onTodoDeleted, onTodoUpdated }) {
       body: JSON.stringify({ id, updatedFields }),
     });
     if (res.ok) {
-      setEditTodoId(null); // Close edit mode
+      setEditTodoId(null);
       console.log("updated Fields");
 
       onTodoUpdated();

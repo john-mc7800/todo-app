@@ -3,18 +3,38 @@ import { ObjectId } from "mongodb";
 
 const db = await connectMongoDB();
 
+// const getTodos = async () => {
+//   try {
+//     const todosCollection = db.collection("todo-collections");
+//     return await todosCollection.find({}, { projection: {} }).toArray();
+//   } catch (error) {
+//     console.log("Error fetching todos:", error);
+//   }
+// };
+
 const getTodos = async () => {
   try {
     const todosCollection = db.collection("todo-collections");
-    return await todosCollection.find({}, { projection: {} }).toArray();
+
+    // Fetch and sort todos by the `createdAt` field in descending order (-1)
+    return await todosCollection.find({}).sort({ createdAt: -1 }).toArray();
   } catch (error) {
     console.log("Error fetching todos:", error);
   }
 };
 
+// const insertTodo = async (todo) => {
+//   const todosCollection = db.collection("todo-collections");
+//   return await todosCollection.insertOne(todo);
+// };
+
 const insertTodo = async (todo) => {
   const todosCollection = db.collection("todo-collections");
-  return await todosCollection.insertOne(todo);
+  const todoWithTimestamp = {
+    ...todo,
+    createdAt: new Date(), // Add a timestamp when the todo is created
+  };
+  return await todosCollection.insertOne(todoWithTimestamp);
 };
 
 const deleteTodo = async (id) => {
