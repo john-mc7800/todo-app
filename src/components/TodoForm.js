@@ -22,7 +22,6 @@ export default function TodoForm({ onTodoAdded }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Send the new todo to the API
     const res = await fetch("/api/list", {
       method: "POST",
       headers: {
@@ -31,8 +30,7 @@ export default function TodoForm({ onTodoAdded }) {
       body: JSON.stringify({ title, description, price }),
     });
 
-    // Log the response for debugging
-    const responseBody = await res.json(); // Parse the response body
+    const responseBody = await res.json();
     console.log("Response status:", res.status);
     console.log("Response body:", responseBody);
 
@@ -41,7 +39,7 @@ export default function TodoForm({ onTodoAdded }) {
       setDescription("");
       setPrice("");
       setMessage("Todo added successfully!");
-      onTodoAdded(); // Refresh the todo list after insertion
+      onTodoAdded();
       setTimeout(() => {
         setIsRedirecting(true);
       }, 2000);
@@ -63,7 +61,7 @@ export default function TodoForm({ onTodoAdded }) {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            className="w-[80%] border border-gray-800 focus:border-2 focus:rounded-md py-1"
+            className="w-[80%] border border-gray-800 focus:border-2 focus:rounded-md py-1 indent-2"
           />
         </div>
         <div className="m-2 flex flex-row items-center justify-between">
@@ -73,7 +71,7 @@ export default function TodoForm({ onTodoAdded }) {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
-            className="w-[80%] border border-gray-800 focus:border-2 focus:rounded-md py-1"
+            className="w-[80%] border border-gray-800 focus:border-2 focus:rounded-md py-1 indent-2"
           />
         </div>
         <div className="m-2 flex flex-row items-center justify-between">
@@ -83,7 +81,7 @@ export default function TodoForm({ onTodoAdded }) {
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required
-            className="w-[80%] border border-gray-800 focus:border-2 focus:rounded-md py-1"
+            className="w-[80%] border border-gray-800 focus:border-2 focus:rounded-md py-1 indent-2"
           />
         </div>
         <button
